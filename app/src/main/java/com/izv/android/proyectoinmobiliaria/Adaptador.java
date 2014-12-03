@@ -1,12 +1,14 @@
 package com.izv.android.proyectoinmobiliaria;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ public class Adaptador extends ArrayAdapter<Vendedor> {
     private Context contexto;
     private int recurso;
     private static LayoutInflater i;
+
 
     public Adaptador(Context context, int resource, ArrayList<Vendedor> objects) {
         super(context, resource, objects);

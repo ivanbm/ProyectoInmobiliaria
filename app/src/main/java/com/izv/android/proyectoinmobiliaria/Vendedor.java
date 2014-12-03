@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Ivan on 29/11/2014.
  */
 public class Vendedor implements Serializable, Comparable<Vendedor> {
-    private long id;
+    private int id;
     private String direccion, tipo;
     private double precio;
 
@@ -14,7 +14,7 @@ public class Vendedor implements Serializable, Comparable<Vendedor> {
         this(0, "", "", 0.0);
     }
 
-    public Vendedor(long id, String direccion, String tipo, double precio) {
+    public Vendedor(int id, String direccion, String tipo, double precio) {
         this.id = id;
         this.direccion = direccion;
         this.tipo = tipo;
@@ -32,11 +32,11 @@ public class Vendedor implements Serializable, Comparable<Vendedor> {
         }
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

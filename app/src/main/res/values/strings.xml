@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FragmentosHorVer</string>
+    <string name="app_name">Proyecto Inmobiliaria</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Añadir</string>
+    <string name="anadir">Añadir</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="msgAnadir">Inmueble añadido</string>
+    <string name="msgEditar">Inmueble editado</string>
+    <string name="msgEliminar">Inmueble eliminado</string>
     <string name="title_activity_secundaria">secundaria</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tituloEditar">Editar Inmueble</string>
+    <string name="datos">data</string>
+
+    <string-array name="array_tipo">
+        <item>Casa</item>
+        <item>Piso</item>
+        <item>Habitación</item>
+        <item>Local</item>
+        <item>Cochera</item>
+    </string-array>
 
 </resources>

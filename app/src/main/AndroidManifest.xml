@@ -20,6 +20,10 @@
             android:name=".Secundaria"
             android:label="@string/title_activity_secundaria" >
         </activity>
+        <activity
+            android:name=".Anadir"
+            android:label="@string/anadir" >
+        </activity>
     </application>
 
 </manifest>
