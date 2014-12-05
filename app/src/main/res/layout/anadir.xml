@@ -103,59 +103,37 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="15dp">
+            android:gravity="center_horizontal">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/anadir"
-                android:id="@+id/btAnadir"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp" />
+                android:text="Subir foto"
+                android:id="@+id/btFoto" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_height="fill_parent"
+            android:gravity="bottom|center_horizontal"
+            android:layout_marginTop="15dp">
 
-            <ScrollView
-                android:layout_width="wrap_content"
+            <Button
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/scrollView" >
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-                    <ImageView
-                        android:layout_width="131dp"
-                        android:layout_height="131dp"
-                        android:id="@+id/iv1anadir"
-                        android:src="@drawable/ic_launcher" />
-
-                    <ImageView
-                        android:layout_width="131dp"
-                        android:layout_height="131dp"
-                        android:id="@+id/iv2anadir"
-                        android:src="@drawable/ic_launcher" />
-
-                    <ImageView
-                        android:layout_width="131dp"
-                        android:layout_height="131dp"
-                        android:id="@+id/iv3anadir"
-                        android:src="@drawable/ic_launcher" />
-                </LinearLayout>
-            </ScrollView>
-
+                android:text="@string/anadir"
+                android:id="@+id/btAnadir"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:background="#ff0f4dff"
+                android:textColor="#ffffffff"
+                android:textStyle="bold"
+                android:textSize="20sp" />
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

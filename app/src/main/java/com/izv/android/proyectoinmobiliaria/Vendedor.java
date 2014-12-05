@@ -71,7 +71,7 @@ public class Vendedor implements Serializable, Comparable<Vendedor> {
 
         Vendedor vendedor = (Vendedor) o;
 
-        if (id != vendedor.id) return false;
+        if (precio != vendedor.precio) return false;
 
         return true;
     }
@@ -100,6 +100,6 @@ public class Vendedor implements Serializable, Comparable<Vendedor> {
 
     @Override
     public int compareTo(Vendedor vendedor) {
-        return 0;
+        return this.getDireccion().compareTo(vendedor.getDireccion());
     }
 }

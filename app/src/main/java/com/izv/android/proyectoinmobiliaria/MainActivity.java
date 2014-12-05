@@ -9,7 +9,10 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -25,18 +29,26 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 
 public class MainActivity extends Activity {
     private ArrayList<Vendedor> lista;
-    private final int TAKE_PICTURE = 0;
     private final int ANADIR_VENDEDOR = 1;
+    private final int MOSTRAR_FOTOS = 2;
+    private final int TAKE_PICTURE = 3;
     private Adaptador ad;
     private Spinner sp;
     private ListView lv;
     private String foto;
+    private int id;
+    private ArrayList<File> listaImg;
+    private ImageView ivFoto;
+    private int posicion = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,19 +77,22 @@ public class MainActivity extends Activity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this,"Eres "+position,Toast.LENGTH_SHORT).show();
+
                 if(horizontal){
-                    //fdos.setTexto("Eres "+t);
+                    obtenerImagenes(lista.get(position).getId());
+                    eventoFoto();
+                    botonAnterior();
+                    botonSiguiente();
                 }else{
                     Intent i = new Intent(MainActivity.this,Secundaria.class);
-                    i.putExtra("eres","Eres "+position);
-                    startActivityForResult(i,ACTIVIDADDOS);
+                    i.putExtra("id",lista.get(position).getId());
+                    startActivityForResult(i,MOSTRAR_FOTOS);
                 }
             }
         });
     }
 
-    private final int ACTIVIDADDOS = 2;
+
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -143,12 +158,7 @@ public class MainActivity extends Activity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case TAKE_PICTURE:
-                    Bundle extras = data.getExtras();
-                    //Bitmap selectedImage = (Bitmap) extras.get(getString(R.string.datos));
-                    //selectedImage = Bitmap.createScaledBitmap(selectedImage, 200, 250, false);
-                    foto = getString(R.string.datos);
-                    System.out.println("FOTO "+foto);
-                    //ivNewUser.setImageBitmap(foto);
+                    tostada(getString(R.string.msgImgSaved));
                     break;
 
                 case ANADIR_VENDEDOR:
@@ -188,6 +198,14 @@ public class MainActivity extends Activity {
     /*-------------------------------------*/
     public void anadir() {
         Intent i = new Intent(this, Anadir.class);
+        Collections.sort(lista);
+        int id;
+        if(lista.size() > 0) {
+            id = lista.get(lista.size() - 1).getId() + 1;
+        }else{
+            id = 0;
+        }
+        i.putExtra("id", id);
         startActivityForResult(i, ANADIR_VENDEDOR);
     }
 
@@ -238,7 +256,7 @@ public class MainActivity extends Activity {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
                         Vendedor vOld = new Vendedor(id, dir, tip, pre);
-                        Vendedor vNuevo = new Vendedor(Integer.parseInt("" + et4.getText()), et1.getText().toString(), sp.getSelectedItem().toString(), Double.parseDouble(et2.getText().toString()));
+                        Vendedor vNuevo = new Vendedor(Integer.parseInt("" + et4.getText()), et1.getText().toString(), et3.getText().toString(), Double.parseDouble(et2.getText().toString()));
 
                         Collections.sort(lista);
                         ClaseXML cxml = new ClaseXML();
@@ -304,15 +322,98 @@ public class MainActivity extends Activity {
     }
 
     /*-------------------------------------*/
+    /*--        METODOS DEL VISOT        --*/
+    /*-------------------------------------*/
+
+    public void obtenerImagenes(int id){
+        String directorio = getExternalFilesDir(Environment.DIRECTORY_DCIM).toString();
+
+        File dir = new File(directorio);
+        listaImg = new ArrayList<File>();
+
+        File[] fList = dir.listFiles();
+        for (File file : fList) {
+            String f = file.toString();
+
+            String[] partir = f.split("_");
+            System.out.println(partir[1].equals(""+id));
+            if(partir[1].equals(""+id)){
+                listaImg.add(file);
+            }
+        }
+
+        if(listaImg.size() > 0){
+            mostrarImg(posicion);
+        }
+
+    }
+
+
+
+    public void mostrarImg(int pos){
+        Bitmap image = BitmapFactory.decodeFile("" + listaImg.get(pos));
+        Bitmap imgEscalada = Bitmap.createScaledBitmap(image, 500, 500, false);
+        ivFoto = (ImageView)findViewById(R.id.ivVisor);
+        ivFoto.setImageBitmap(imgEscalada);
+    }
+
+    public void botonSiguiente(){
+        Button bt = (Button)findViewById(R.id.btSig);
+        bt.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v)
+            {
+                if(posicion+1 > listaImg.size()-1) {
+                    posicion = 0;
+                }else{
+                    posicion = posicion+1;
+                }
+                mostrarImg(posicion);
+            }
+        });
+    }
+
+    public void botonAnterior(){
+        Button bt = (Button)findViewById(R.id.btAnt);
+        bt.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v)
+            {
+                if(posicion-1 < 0) {
+                    posicion = listaImg.size()-1;
+                }else{
+                    posicion = posicion-1;
+                }
+                mostrarImg(posicion);
+            }
+        });
+    }
+
+    public void eventoFoto(){
+        Button bt = (Button)findViewById(R.id.btSubir);
+        bt.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v)
+            {
+                camara();
+            }
+        });
+    }
+
+
+    /*-------------------------------------*/
     /*--           HACER FOTO            --*/
     /*-------------------------------------*/
 
     public void camara(){
-        Intent fotoPick = new Intent(
-                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(fotoPick,
-                TAKE_PICTURE);
+        Intent fotoPick = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        String fecha = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(new Date());
+        Uri uriSavedImage=Uri.fromFile(new File(getExternalFilesDir(Environment.DIRECTORY_DCIM),"inmueble_"+id+"_"+fecha+".jpg"));
+        fotoPick.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+        startActivityForResult(fotoPick,TAKE_PICTURE);
+
     }
-
-
 }

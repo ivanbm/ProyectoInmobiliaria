@@ -9,10 +9,14 @@
     <string name="msgAnadir">Inmueble añadido</string>
     <string name="msgEditar">Inmueble editado</string>
     <string name="msgEliminar">Inmueble eliminado</string>
+    <string name="msgImgSaved">Imagen guardada</string>
     <string name="title_activity_secundaria">secundaria</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tituloEditar">Editar Inmueble</string>
     <string name="datos">data</string>
+    <string name="anterior">Anterior</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="nueva">Nueva</string>
 
     <string-array name="array_tipo">
         <item>Casa</item>

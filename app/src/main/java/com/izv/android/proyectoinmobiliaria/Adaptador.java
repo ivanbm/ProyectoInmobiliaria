@@ -46,11 +46,12 @@ public class Adaptador extends ArrayAdapter<Vendedor> {
         if(convertView == null){
             convertView = i.inflate(recurso, null);
 
-            //ImageView iv1 = (ImageView)convertView.findViewById(R.id.ivImagen);
+
             vh = new ViewHolder();
             vh.tv1 = (TextView)convertView.findViewById(R.id.tvDireccion);
             vh.tv2 = (TextView)convertView.findViewById(R.id.tvTipo);
             vh.tv3 = (TextView)convertView.findViewById(R.id.tvPrecio);
+            vh.iv = (ImageView)convertView.findViewById(R.id.ivFtipo);
 
             convertView.setTag(vh);
         }else{
@@ -64,16 +65,16 @@ public class Adaptador extends ArrayAdapter<Vendedor> {
         vh.tv2.setText(lista.get(position).getTipo());
         vh.tv3.setText(""+lista.get(position).getPrecio()+" €");
 
-        /*if(lista.get(position).getImagen().equals("vacio")) {
-            vh.iv.setImageResource(R.drawable.ic_launcher);
-            System.out.println("ENTRA");
-        }else{
-            Bitmap bitmap = BitmapFactory.decodeFile(lista.get(position).getImagen());
-            Bitmap caratula = Bitmap.createScaledBitmap(bitmap, 200, 200, false);
-            caratula = getRoundedCornerBitmap(caratula);
-            vh.iv.setImageBitmap(caratula);
+        if(lista.get(position).getTipo().equals("Casa")) {
+            vh.iv.setImageResource(R.drawable.house);
+        }else if(lista.get(position).getTipo().equals("Piso")) {
+            vh.iv.setImageResource(R.drawable.flat);
+        }else if(lista.get(position).getTipo().equals("Cochera")) {
+            vh.iv.setImageResource(R.drawable.garage);
+        }else if(lista.get(position).getTipo().equals("Habitación")) {
+            vh.iv.setImageResource(R.drawable.room);
         }
-        vh.iv.setTag(position);*/
+        vh.iv.setTag(position);
 
         return convertView;
     }
