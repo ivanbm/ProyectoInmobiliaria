@@ -288,8 +288,10 @@ public class MainActivity extends Activity {
         ClaseXML cxml = new ClaseXML();
         cxml.eliminar(getApplicationContext(), lista, v);
 
+        eliminarImagen(id);
         Collections.sort(lista);
         tostada(getString(R.string.msgEliminar));
+
         mostrarInmuebles();
     }
 
@@ -347,6 +349,25 @@ public class MainActivity extends Activity {
         }
 
     }
+
+    public void eliminarImagen(int id){
+        String directorio = getExternalFilesDir(Environment.DIRECTORY_DCIM).toString();
+
+        File dir = new File(directorio);
+        listaImg = new ArrayList<File>();
+
+        File[] fList = dir.listFiles();
+        for (File file : fList) {
+            String f = file.toString();
+
+            String[] partir = f.split("_");
+            System.out.println(partir[1].equals(""+id));
+            if(partir[1].equals(""+id)){
+                file.delete();
+            }
+        }
+    }
+
 
 
 
